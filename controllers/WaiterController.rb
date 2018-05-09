@@ -16,9 +16,12 @@ class WaiterController < ApplicationController
       orders: this_waiter_orders
     }.to_json
   end
+  # you could have also made an order controller and had it be like orders/:waiter_id
+  # and that'd have been fine too if you had a good reason
+
 
   # you could also use this relation to find:
-  # how many orders is __some waiter__ waiting on (open = true)
+  # how many orders is __some waiter__ waiting on currently (open = true)
   # how many items were ordered by __some waiter's__ customers today
   # how many orders have been sent out (open = false) for __some waiter_
 
@@ -33,23 +36,45 @@ class WaiterController < ApplicationController
     w = waiter Waiter.find :id
 
     # you can include whatever you want
+    # try to think of something else you could include that isn't thought of here
     # what to include will be dictated by client or project manager needs
 
     {
       success: true,
-      page_title: "Info for #{w.name}"
-      message: "Route for show page still under construction"
+      page_title: "Info for #{w.name}",
+      message: "Route for show page still under construction",
+      orders: w.orders
     }.to_json
 
   end 
 
 
-
-
-
   # later: 
-  # get the menu items for a waiter
-  # gets the waiters for a menu item
+  # or get the waiters for a menu item
+
+  # get the menu items for a waiter:
+  get '/:id/menuitems' do
+    w = Waiter.find params[:id]
+    # binding.pry
+    # "check yr terminal"
+    {
+      success: true,
+      page_title: "Menu items for #{w.name}",
+      items: w.menuitems
+    }.to_json
+  end
+
+  # now you could answer, for example the question: how many omelettes is Samat waiting on?
+  # what other questions could you answer?
+  # might you send over tons of data to the front end and have them parse it?
+  # or might you do a lot of the work, and have really specific routes, and lessen 
+  # the data-crunching load on your front end developers?
+  get '/:waiter_id/:menuitem_id' do
+    w = Waiter.find params[:waiter_id]
+    binding.pry
+    w.menuitems.where(id: params[:menuitem_id])
+    "check yr terminal"
+  end
 
 
 
