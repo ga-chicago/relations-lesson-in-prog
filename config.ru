@@ -1,8 +1,19 @@
 require 'sinatra/base'
 require 'sinatra/activerecord'
 
-require './controllers/ApplicationController.rb'
+require './models/WaiterModel'
+require './models/MenuitemModel'
+
+require './controllers/ApplicationController'
+require './controllers/WaiterController'
+require './controllers/MenuitemController'
 
 map ('/') {
   run ApplicationController
+}
+map ('/waiters') {
+  run WaiterController
+}
+map ('/menuitems') {
+  run MenuitemController
 }

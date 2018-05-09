@@ -1,0 +1,78 @@
+waiters
+
+chefs
+
+guests
+
+menu_items
+
+(which one of you is letting this spaghetti get cold)
+* waiter has many orders
+* waiter HAS MANY menu_items THROUGH orders
+
+(how many soufflés are up and whose are they/where do they go)
+* menu_item has many orders 
+* menu_item has many waiters through orders
+
+list of menu items
+
+
+orders (for the kitchen)
+  id
+  menu_item_id (foreign key)
+  open boolean
+  table_id
+
+
+tickets:  has many menu_items, orders
+          ticket has one waiter
+          ticket belongs to shift
+  id
+  table_no
+  shift_id
+  waiter_id
+  open boolean
+
+waiters
+  id
+  name
+
+shifts
+  id
+  date
+  dinner boolean? lunch/dinner/brunch/breakfast enum
+
+menu items
+  id
+  item_name
+  description
+  price
+
+
+tables
+  id
+  table_no
+
+team has many players
+player belongs to team
+team has one coach
+coach belongs to team
+
+coach  has many players through teams
+
+
+team 
+  id
+  team_name
+  coach_id
+
+player
+  id
+  player_name
+  team_id
+
+coach
+  id
+  name
+  team_id 
+
